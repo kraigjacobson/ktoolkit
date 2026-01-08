@@ -2,6 +2,23 @@
 
 This project contains a Docker Compose configuration for running [Ostris AI Toolkit](https://github.com/ostris/ai-toolkit) in a containerized environment with all required dependencies.
 
+## Installation
+
+### Clone This Repository
+
+This repository uses git submodules for the ai-toolkit dependency. Clone with:
+
+```bash
+git clone --recurse-submodules https://github.com/kraigjacobson/ktoolkit.git
+cd ktoolkit
+```
+
+If you already cloned without `--recurse-submodules`, initialize the submodule:
+
+```bash
+git submodule update --init --recursive
+```
+
 ## Prerequisites
 
 - **Docker** (20.10 or higher)
