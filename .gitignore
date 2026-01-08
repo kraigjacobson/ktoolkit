@@ -1,0 +1,27 @@
+# Environment variables with sensitive data
+.env
+
+# AI Toolkit database
+ai-toolkit/aitk_db.db
+
+# Training datasets (can be large)
+ai-toolkit/datasets/*
+!ai-toolkit/datasets/.gitkeep
+
+# Training outputs (can be large)
+ai-toolkit/output/*
+!ai-toolkit/output/.gitkeep
+
+# Docker volumes
+volumes/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

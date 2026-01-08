@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  ai-toolkit:
+    image: ostris/aitoolkit:latest
+    container_name: ai-toolkit
+    restart: unless-stopped
+    ports:
+      - "8675:8675"
+    volumes:
+      # Mount the local ai-toolkit folder to persist data
+      - ./ai-toolkit/datasets:/app/ai-toolkit/datasets
+      - ./ai-toolkit/output:/app/ai-toolkit/output
+      - ./ai-toolkit/config:/app/ai-toolkit/config
+      - ./ai-toolkit/aitk_db.db:/app/ai-toolkit/aitk_db.db
+
+      # Mount HuggingFace cache to avoid re-downloading models
+      - huggingface-cache:/root/.cache/huggingface/hub
+
+    environment:
+      # Authentication token for UI (change in .env file)
+      - AI_TOOLKIT_AUTH=${AI_TOOLKIT_AUTH:-password}
+
+      # HuggingFace token for accessing gated models like FLUX.1-dev
+      - HF_TOKEN=${HF_TOKEN:-}
+
+      # Node environment
+      - NODE_ENV=production
+
+      # Timezone
+      - TZ=${TZ:-UTC}
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+    # Ensure the container has access to GPU
+    runtime: nvidia
+
+volumes:
+  # Named volume for HuggingFace cache
+  huggingface-cache:
+    driver: local
